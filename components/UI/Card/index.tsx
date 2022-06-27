@@ -16,13 +16,12 @@ export default Card;
 const styles = StyleSheet.create({
   card: {
     borderRadius: 6,
-    elevation: 3,
+    elevation: 8,
     backgroundColor: "#fff",
     shadowOffset: { width: 1, height: 1 },
     shadowColor: "#333",
     shadowOpacity: 0.3,
     shadowRadius: 0.2,
-    marginVertical: 6,
     paddingHorizontal: 16,
     paddingVertical: 8,
   },

@@ -16,21 +16,27 @@ const ProfileCard: React.FC<Props> = ({
   fullName = "john doe",
   gender = "Male",
   age = 21,
-  weight = 10,
+  weight = 70,
 }) => {
   const [isOpen, setIsOpen] = React.useState(true);
+
+  console.log("render");
 
   const getInitials = (fullName: string): string => {
     const firsName = fullName.split(" ")[0].charAt(0).toUpperCase();
     const lastName = fullName.split(" ")[1].charAt(0).toLocaleUpperCase();
     return firsName + lastName;
   };
+
+  const closeProfile = () => {
+    setIsOpen(false);
+  };
   return (
-    <View style={{ display: isOpen ? "flex" : "none" }}>
+    <View style={tw.style({ display: isOpen ? "flex" : "none" })}>
       <Card>
         <View style={tw`flex flex-row justify-between items-center py-1`}>
           <Text style={tw`text-2xl`}>On treatment</Text>
-          <TouchableOpacity onPress={() => setIsOpen(false)}>
+          <TouchableOpacity onPress={closeProfile}>
             <View style={styles.btnContainer}>
               <TouchableOpacity>
                 <AntDesign
@@ -89,8 +95,5 @@ const styles = StyleSheet.create({
     height: 32,
     justifyContent: "center",
     alignItems: "center",
-  },
-  profileContainer: {
-    height: 80,
   },
 });

@@ -1,27 +1,21 @@
 import {
-  ScrollView,
+  FlatList,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useEffect, useState } from "react";
-import {
-  AntDesign,
-  FontAwesome,
-  FontAwesome5,
-  Ionicons,
-} from "@expo/vector-icons";
+import React from "react";
+import { AntDesign, Ionicons } from "@expo/vector-icons";
 
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../navigation";
 import Colors from "../constants/Colors";
-
-import { Shadow } from "react-native-shadow-2";
-import Card from "../components/UI/Card";
-import ProfileItem from "../components/UI/ProfileItem";
 import tw from "twrnc";
+
+import Card from "../components/UI/Card";
 import ProfileCard from "../components/ProfileCard";
+import Prescription from "../components/Prescription";
 
 type MainScreenNavigationProps = NativeStackNavigationProp<
   RootStackParams,
@@ -33,7 +27,31 @@ type Props = {
 };
 
 const MainScreen: React.FC<Props> = ({ navigation }) => {
-  useEffect(() => {
+  const [prescriptions, setprescriptions] = React.useState([
+    {
+      id: 1,
+      name: "Rifamcipin",
+      formulation: "100 mg tabs",
+      dose: "1 tab three times a day",
+      course: 10,
+    },
+    {
+      id: 2,
+      name: "Ethambutoln",
+      formulation: "PAS sodium salt (equivalent to 4g PAS acid), sachet",
+      dose: "3 -3.5 g two times a day",
+      course: 14,
+    },
+    {
+      id: 3,
+      name: "Levofloxacin",
+      formulation: "100mg  dispersible tab",
+      dose: "3 or 4 tab a day",
+      course: 21,
+    },
+  ]);
+
+  React.useEffect(() => {
     navigation.setOptions({
       title: "TB Web Solution",
       headerStyle: {
@@ -86,20 +104,46 @@ const MainScreen: React.FC<Props> = ({ navigation }) => {
         age={100}
         weight={120}
       />
-      <ScrollView>
-        <Card>
-          <Text style={tw`bg-blue-100`}>Profle</Text>
-        </Card>
-        <Card>
-          <Text style={tw`bg-blue-100`}>Profle</Text>
-        </Card>
-        <Card>
-          <Text style={tw`bg-blue-100`}>Profle</Text>
-        </Card>
-        <Text style={tw`bg-blue-100`}>Prescriptions</Text>
-        <Text style={tw`bg-blue-100`}>Commentary</Text>
-        <Text style={tw`bg-blue-100`}>controller</Text>
-      </ScrollView>
+      <View>
+        <View style={tw`mt-2`}>
+          <Card>
+            <Text style={tw`text-2xl text-center font-bold`}>
+              Recommended for HR-TB
+            </Text>
+            <TouchableOpacity>
+              <View
+                style={tw`flex flex-row justify-center items-center border-2 rounded border-rose-500 py-2 my-4`}
+              >
+                <AntDesign
+                  name="plus"
+                  size={24}
+                  color={tw.color("text-rose-600")}
+                />
+                <Text style={tw`ml-2 text-rose-700 font-bold`}>
+                  Add prescription
+                </Text>
+              </View>
+            </TouchableOpacity>
+            <View>
+              <FlatList
+                keyExtractor={item => item.name}
+                data={prescriptions}
+                renderItem={({ item }) => (
+                  <Prescription
+                    name={item.name}
+                    formulation={item.formulation}
+                    dose={item.dose}
+                    course={item.course}
+                  />
+                )}
+              />
+              <Card>
+                <Text style={tw`bg-blue-100`}>Profle</Text>
+              </Card>
+            </View>
+          </Card>
+        </View>
+      </View>
     </View>
   );
 };
